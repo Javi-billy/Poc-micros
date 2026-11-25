@@ -1,0 +1,28 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+clients:
+  servicio-pedidos:
+    url: ${CLIENTS_SERVICIO_PEDIDOS_URL:http://localhost:8081}
+  inventario:
+    url: ${CLIENTS_INVENTARIO_URL:http://localhost:8084}
+
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ms-inventario:
+        slidingWindowSize: 4
+        minimumNumberOfCalls: 2
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+      servicio-pedidos:
+        slidingWindowSize: 4
+        minimumNumberOfCalls: 2
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
