@@ -15,6 +15,8 @@ import com.example.pedidos.domain.model.CreateOrderCommand;
 import com.example.pedidos.domain.model.Order;
 import com.example.pedidos.domain.port.in.CreateOrderUseCase;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -25,6 +27,11 @@ public class OrderController {
 		this.createOrderUseCase = createOrderUseCase;
 	}
 
+	/**
+	 * @param request
+	 * @return OrderResponse
+	 */
+	@Operation(summary = "Crear un nuevo pedido", description = "Valida el stock en ms-inventario, registra la orden y dispara el evento hacia Kafka.")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public OrderResponse createOrder(@RequestBody CreateOrderRequest request) {
