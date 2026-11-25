@@ -15,12 +15,19 @@ import com.example.demo.domain.port.in.RegistrarPedidoUseCase;
 public class PedidosController {
 
 	// private final PedidoProducer pedidoProducer;
-	private final RegistrarPedidoUseCase registrarPedidoUseCase ;
+	private final RegistrarPedidoUseCase registrarPedidoUseCase;
 
 	public PedidosController(RegistrarPedidoUseCase registrarPedidoUseCase) {
 		this.registrarPedidoUseCase = registrarPedidoUseCase;
 	}
 
+	/**
+	 * Recibir peticiones HTTP y publicar mensajes directamente en los tópicos de
+	 * Kafka para que los consuman tus instancias de servicio-notificaciones
+	 * 
+	 * @param request
+	 * @return ResponseEntity<String>
+	 */
 	@PostMapping
 	public ResponseEntity<String> crearPedido(@RequestBody PedidoDTO request) {
 		PedidoDTO pedido = new PedidoDTO(request.id(), request.producto(), request.cantidad());
