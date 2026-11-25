@@ -23,3 +23,35 @@ spring:
               uri: ${SERVICIO_PEDIDOS_URL:http://localhost:8081}
               predicates:
                 - Path=/pedidos/**
+
+            - id: openapi-pedidos
+              uri: ${MS_PEDIDOS_URL:http://localhost:8083}
+              predicates:
+                - Path=/v3/api-docs/orders
+              filters:
+                - RewritePath=/v3/api-docs/orders, /v3/api-docs
+
+            - id: openapi-inventario
+              uri: ${MS_INVENTARIO_URL:http://localhost:8084}
+              predicates:
+                - Path=/v3/api-docs/inventory
+              filters:
+                - RewritePath=/v3/api-docs/inventory, /v3/api-docs
+
+            - id: openapi-productor-kafka
+              uri: ${SERVICIO_PEDIDOS_URL:http://localhost:8081}
+              predicates:
+                - Path=/v3/api-docs/productor
+              filters:
+                - RewritePath=/v3/api-docs/productor, /v3/api-docs
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: 1. Pedidos (ms-pedidos)
+        url: /v3/api-docs/orders
+      - name: 2. Inventario (ms-inventario)
+        url: /v3/api-docs/inventory
+      - name: 3. Productor Kafka (servicio-pedidos)
+        url: /v3/api-docs/productor
