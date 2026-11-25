@@ -1,0 +1,25 @@
+server:
+  port: ${SERVER_PORT:8089}
+
+spring:
+  application:
+    name: ms-api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: ruta-pedidos
+              uri: ${MS_PEDIDOS_URL:http://localhost:8083}
+              predicates:
+                - Path=/api/orders/**
+
+            - id: ruta-inventario
+              uri: ${MS_INVENTARIO_URL:http://localhost:8084}
+              predicates:
+                - Path=/api/inventory/**
+
+            - id: ruta-productor-kafka
+              uri: ${SERVICIO_PEDIDOS_URL:http://localhost:8081}
+              predicates:
+                - Path=/pedidos/**
