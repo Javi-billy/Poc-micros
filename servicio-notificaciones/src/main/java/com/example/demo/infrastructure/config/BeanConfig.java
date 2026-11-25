@@ -11,7 +11,7 @@ import com.example.demo.domain.port.out.InventarioPort;
 public class BeanConfig {
 
 	@Bean
-	public ProcesarPedidoUseCase procesarPedidoUseCase(InventarioPort inventarioPort) {
+	ProcesarPedidoUseCase procesarPedidoUseCase(InventarioPort inventarioPort) {
 		return new ProcesarPedidoService(inventarioPort);
 	}
 }

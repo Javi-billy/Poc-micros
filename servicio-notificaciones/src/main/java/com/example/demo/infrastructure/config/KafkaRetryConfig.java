@@ -26,7 +26,7 @@ import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 @Configuration
 public class KafkaRetryConfig {
 
-	@Value("${spring.kafka.properties.schema.registry.url:http://localhost:8085}")
+	@Value("${SCHEMA_REGISTRY_URL:http://localhost:8085}")
 	private String schemaRegistryUrl;
 
 	@Value("${spring.kafka.bootstrap-servers}")
