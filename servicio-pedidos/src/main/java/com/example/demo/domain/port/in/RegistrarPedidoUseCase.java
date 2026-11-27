@@ -4,5 +4,6 @@ import com.example.demo.domain.model.PedidoDTO;
 
 public interface RegistrarPedidoUseCase {
 
-	void registrarPedido(PedidoDTO pedido);
+	void registrarPedido(PedidoDTO pedido, String tipoEvento);
+	
 }

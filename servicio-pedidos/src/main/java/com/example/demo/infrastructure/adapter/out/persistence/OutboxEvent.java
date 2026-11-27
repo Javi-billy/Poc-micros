@@ -1,5 +1,6 @@
 package com.example.demo.infrastructure.adapter.out.persistence;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,11 +13,20 @@ public class OutboxEvent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String pedidoId;
+	private String aggregateId;
+	
+	private String type;
 
-	private String producto;
+	public String getType() {
+		return type;
+	}
 
-	private int cantidad;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Column(columnDefinition = "TEXT", nullable = false)
+	private String payload;
 
 	private boolean enviado = false;
 
@@ -28,28 +38,20 @@ public class OutboxEvent {
 		this.id = id;
 	}
 
-	public String getPedidoId() {
-		return pedidoId;
+	public String getAggregateId() {
+		return aggregateId;
 	}
 
-	public void setPedidoId(String pedidoId) {
-		this.pedidoId = pedidoId;
+	public void setAggregateId(String aggregateId) {
+		this.aggregateId = aggregateId;
 	}
 
-	public String getProducto() {
-		return producto;
+	public String getPayload() {
+		return payload;
 	}
 
-	public void setProducto(String producto) {
-		this.producto = producto;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
+	public void setPayload(String payload) {
+		this.payload = payload;
 	}
 
 	public boolean isEnviado() {

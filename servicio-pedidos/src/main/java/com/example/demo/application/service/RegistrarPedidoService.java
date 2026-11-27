@@ -13,8 +13,9 @@ public class RegistrarPedidoService implements RegistrarPedidoUseCase {
 	}
 
 	@Override
-	public void registrarPedido(PedidoDTO pedido) {
+	public void registrarPedido(PedidoDTO pedido, String tipoEvento) {
 		// Aquí irían tus validaciones o reglas de negocio puras (ej. cantidad > 0)
-		pedidoRepositoryPort.guardar(pedido);
+		pedidoRepositoryPort.guardar(pedido, tipoEvento);
 	}
+		
 }
