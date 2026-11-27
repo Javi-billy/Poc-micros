@@ -45,6 +45,13 @@ spring:
               filters:
                 - RewritePath=/v3/api-docs/productor, /v3/api-docs
 
+            - id: ms-asistente-ia
+              uri: ${ASISTENTE_IA_URL:http://localhost:8086}
+              predicates:
+                - Path=/api/ai/**,/v3/api-docs/asistente-ia
+              filters:
+                - RewritePath=/v3/api-docs/asistente-ia, /v3/api-docs
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -55,3 +62,5 @@ springdoc:
         url: /v3/api-docs/inventory
       - name: 3. Productor Kafka (servicio-pedidos)
         url: /v3/api-docs/productor
+      - name: 4. Asistente IA (Spring AI)
+        url: /v3/api-docs/asistente-ia
