@@ -28,8 +28,9 @@ spring:
 
 clients:
   inventario:
-    url: ${CLIENTS_INVENTARIO_URL:http://localhost:8084}
+    url: ${CLIENTS_INVENTARIO_URL:http://localhost:8084}  
 
 kafka:
   topic:
     pedidos: pedidos-avro-topic
+    pedidos-cancelados: pedidos-cancelados-avro-topic

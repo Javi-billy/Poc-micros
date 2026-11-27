@@ -19,8 +19,6 @@ import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ContainerProperties.AckMode;
 import org.springframework.kafka.support.serializer.JacksonJsonSerializer;
 
-import com.example.demo.domain.model.PedidoDTO;
-
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 
 @Configuration
@@ -50,7 +48,7 @@ public class KafkaRetryConfig {
 	}
 
 	@Bean
-	ConsumerFactory<String, PedidoDTO> consumerFactory() {
+	ConsumerFactory<String, Object> consumerFactory() {
 		Map<String, Object> config = new HashMap<>();
 		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -58,17 +56,6 @@ public class KafkaRetryConfig {
 
 		// 1. Desactivamos el commit automático de Kafka
 		config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-
-		/*
-		 * JacksonJsonDeserializer<PedidoDTO> jsonDeserializer = new
-		 * JacksonJsonDeserializer<>(PedidoDTO.class);
-		 * jsonDeserializer.addTrustedPackages("*");
-		 * jsonDeserializer.setUseTypeHeaders(false);
-		 * 
-		 * return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-		 * jsonDeserializer);
-		 */
-
 		config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
 		config.put("schema.registry.url", schemaRegistryUrl);
@@ -78,8 +65,8 @@ public class KafkaRetryConfig {
 	}
 
 	@Bean
-	ConcurrentKafkaListenerContainerFactory<String, PedidoDTO> kafkaListenerContainerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, PedidoDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+	ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
 
 		// 2. Exigimos confirmación manual inmediata en el código

@@ -12,4 +12,8 @@ public interface InventoryFeignClient {
     @PostMapping("/api/inventory/{productCode}/decrease")
     void decreaseStock(@PathVariable("productCode") String productCode,
                        @RequestParam("quantity") int quantity);
+    
+    @PostMapping("/api/inventory/{productCode}/increase")
+	void increaseStock(@PathVariable("productCode") String productCode,
+                       @RequestParam("quantity") int quantity);
 }

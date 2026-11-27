@@ -16,4 +16,9 @@ public class InventarioFeignAdapter implements InventarioPort {
 	public void descontarStock(String codigoProducto, int cantidad) {
 		inventoryFeignClient.decreaseStock(codigoProducto, cantidad);
 	}
+
+	@Override
+	public void incrementarStock(String codigoProducto, int cantidad) {
+		inventoryFeignClient.increaseStock(codigoProducto, cantidad);
+	}
 }
