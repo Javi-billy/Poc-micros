@@ -43,6 +43,15 @@ services:
       - kafka
       - schema-registry
 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    entrypoint: ["/bin/sh", "-c", "/bin/ollama serve & sleep 5 && ollama pull llama3.2 && wait"]
+
 # ==========================================
 # MICROSERVICIOS
 # ==========================================
@@ -77,7 +86,9 @@ services:
       SERVER_PORT: 8083
       CLIENTS_INVENTARIO_URL: http://ms-inventario:8084
       CLIENTS_SERVICIO_PEDIDOS_URL: http://servicio-pedidos:8081
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
     depends_on:
+      - kafka
       - ms-inventario
       - servicio-pedidos
 
@@ -107,7 +118,26 @@ services:
       MS_PEDIDOS_URL: http://ms-pedidos:8083
       MS_INVENTARIO_URL: http://ms-inventario:8084
       SERVICIO_PEDIDOS_URL: http://servicio-pedidos:8081
+      ASISTENTE_IA_URL: http://ms-asistente-ia:8086
     depends_on:
       - ms-pedidos
       - ms-inventario
       - servicio-pedidos
+      - ms-asistente-ia
+  
+  ms-asistente-ia:
+    build: ./ms-asistente-ia
+    container_name: ms-asistente-ia
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_AI_OLLAMA_BASE_URL: http://ollama:11434
+      CLIENTS_INVENTARIO_URL: http://ms-inventario:8084
+      CLIENTS_PEDIDOS_URL: http://ms-pedidos:8083
+    depends_on:
+      - ollama
+      - ms-pedidos
+      - ms-inventario
+
+volumes:
+  ollama_data:    
