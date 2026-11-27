@@ -1,0 +1,24 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: ms-asistente-ia
+  ai:
+    ollama:
+      base-url: ${SPRING_AI_OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: llama3.2
+          temperature: 0.2
+
+clients:
+  inventario:
+    url: ${CLIENTS_INVENTARIO_URL:http://localhost:8084}
+  pedidos:
+    url: ${CLIENTS_PEDIDOS_URL:http://localhost:8083}
+
+springdoc:
+  servers:
+    - url: http://localhost:8089
+      description: API Gateway
