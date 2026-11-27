@@ -26,6 +26,14 @@ public class KafkaProducerFeignAdapter implements EventPublisherPort {
 		feignClient.sendOrderEvent(payload);
 	}
 
+	@Override
+	@CircuitBreaker(name = "servicio-pedidos", fallbackMethod = "fallbackPublishOrder")
+	public void publishOrderCancelled(Order order) {
+		PedidoAvroRequest payload = new PedidoAvroRequest(order.getId().toString(), order.getProductCode(),
+				order.getQuantity());
+		feignClient.sendOrderCancelEvent(payload);
+	}
+
 	@SuppressWarnings("unused")
 	private void fallbackPublishOrder(Order order, Throwable t) {
 		System.err.println("CIRCUIT BREAKER [servicio-pedidos] -> Fallback activado para pedido " + order.getId()

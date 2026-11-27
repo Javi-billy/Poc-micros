@@ -31,7 +31,7 @@ public class CreateOrderService implements CreateOrderUseCase {
 
 		Order order = new Order(UUID.randomUUID(), command.productCode(), command.quantity(), command.totalAmount(),
 				command.customerEmail(), "PENDING");
-		order.confirm();
+		//order.confirm();
 
 		Order savedOrder = orderRepositoryPort.save(order);
 		eventPublisherPort.publishOrderCreated(savedOrder);

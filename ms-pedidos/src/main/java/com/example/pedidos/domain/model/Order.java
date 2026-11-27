@@ -32,6 +32,17 @@ public class Order {
 		this.status = "CONFIRMED";
 	}
 
+	public void cancel() {		
+	    if (!"CONFIRMED".equals(this.status)) {
+	        throw new IllegalStateException("Solo se pueden cancelar pedidos confirmados. Estado actual: " + this.status);
+	    }
+	    this.status = "CANCELLED";
+	}
+
+	public void pending() {
+		this.status = "PENDING";
+	}
+	
 	public UUID getId() {
 		return id;
 	}

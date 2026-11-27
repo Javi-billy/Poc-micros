@@ -6,5 +6,5 @@ import com.example.pedidos.domain.model.Order;
 public interface CreateOrderUseCase {
 
 	Order createOrder(CreateOrderCommand command);
-	
+		
 }
